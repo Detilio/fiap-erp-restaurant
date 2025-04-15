@@ -20,6 +20,7 @@ public class user {
     private Date dateChange;
     private Date dateGeneration;
     private String adress;
+    private String password;
 
     public user(){
     }
@@ -78,5 +79,13 @@ public class user {
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
