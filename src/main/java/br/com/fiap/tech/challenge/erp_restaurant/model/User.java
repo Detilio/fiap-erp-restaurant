@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class user {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class user {
     private String adress;
     private String password;
 
-    public user(){
+    public User(){
     }
 
     public Long getId() {
