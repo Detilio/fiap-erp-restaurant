@@ -57,3 +57,7 @@ EXPOSE 8080
 
 USER app
 ENTRYPOINT ["java", "-jar", "/app/run.jar"]
+
+-----------------------------------------------------
+Para rodar o container com sucesso:
+docker run -p 8080:8080 -e MYSQL_HOST="host.docker.internal" -e MYSQL_USER="root" -e MYSQL_PASSWORD=466238 fiap_erp_app
