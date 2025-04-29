@@ -17,47 +17,10 @@ public class UserEntity {
     private String name;
     private String email;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setDateChange(Date dateChange) {
-        this.dateChange = dateChange;
-    }
-
-    public void setDateGeneration(Date dateGeneration) {
-        this.dateGeneration = dateGeneration;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setType(User.UserType type) {
-        this.type = type;
-    }
-
     @Column(unique = true)
     private String login;
     private Date dateChange;
     private Date dateGeneration;
-    private String adress;
     private String password;
 
     // Campo visível apenas no payload, não precisa estar no banco de dados
@@ -68,11 +31,10 @@ public class UserEntity {
     @Column(name = "type") // Opcional: Define o nome da coluna no banco de dados
     private User.UserType type;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id") // Chave estrangeira na tabela de endereços (address)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AddressEntity> deliveryAddresses = new ArrayList<>();
 
-    public UserEntity(){
+    public UserEntity() {
     }
 
     public Long getId() {
@@ -83,41 +45,60 @@ public class UserEntity {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public Date getDateChange() {
         return dateChange;
+    }
+
+    public void setDateChange(Date dateChange) {
+        this.dateChange = dateChange;
     }
 
     public Date getDateGeneration() {
         return dateGeneration;
     }
 
-    public String getAdress() {
-        return adress;
+    public void setDateGeneration(Date dateGeneration) {
+        this.dateGeneration = dateGeneration;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public User.UserType getType() {
         return type;
     }
 
-    //  Enum para representar os tipos de usuário
-    public enum UserType {
-        MASTER,
-        NORMAL
+    public void setType(User.UserType type) {
+        this.type = type;
     }
 
-    public String getToken() {
-        return token;
+    public List<AddressEntity> getDeliveryAddresses() {
+        return deliveryAddresses;
     }
+
 }

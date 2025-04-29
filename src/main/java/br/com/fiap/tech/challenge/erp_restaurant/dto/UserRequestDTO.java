@@ -1,13 +1,15 @@
 package br.com.fiap.tech.challenge.erp_restaurant.dto;
 
 import br.com.fiap.tech.challenge.erp_restaurant.model.User;
+import java.util.List;
 
 public class UserRequestDTO {
     private String name;
     private String email;
     private String login;
-    private String adress;
     private String password;
+    private User.UserType type;
+    private List<AddressDTO> addresses;
 
     public String getName() {
         return name;
@@ -33,14 +35,6 @@ public class UserRequestDTO {
         this.login = login;
     }
 
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -57,10 +51,14 @@ public class UserRequestDTO {
         this.type = type;
     }
 
-    private User.UserType type;
+    public List<AddressDTO> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressDTO> addresses) {
+        this.addresses = addresses;
+    }
 
     public UserRequestDTO() {
     }
-
-
 }

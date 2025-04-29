@@ -1,12 +1,26 @@
 package br.com.fiap.tech.challenge.erp_restaurant.model;
 
 public class Address {
+    private Long id;
     private String street;
     private String number;
     private String district;
     private String city;
     private String state;
     private String zipCode;
+
+    public Address(Long id, String street, String number, String district, String city, String state, String zioCode) {
+        this.id = id;
+        this.street = street;
+        this.number = number;
+        this.district = district;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zioCode;
+    }
+
+    public Address() {
+    }
 
     public String getStreet() {
         return street;
@@ -54,5 +68,13 @@ public class Address {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -1,8 +1,10 @@
 package br.com.fiap.tech.challenge.erp_restaurant.service;
 
+import br.com.fiap.tech.challenge.erp_restaurant.dto.AddressDTO;
 import br.com.fiap.tech.challenge.erp_restaurant.dto.UserRequestDTO;
 import br.com.fiap.tech.challenge.erp_restaurant.dto.UserResponseDTO;
 import br.com.fiap.tech.challenge.erp_restaurant.entity.UserEntity;
+import br.com.fiap.tech.challenge.erp_restaurant.model.Address;
 import br.com.fiap.tech.challenge.erp_restaurant.model.User;
 import br.com.fiap.tech.challenge.erp_restaurant.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +26,43 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // Metodo para converter UserRequestDTO para a classe de modelo User
+    // Metodo para converter Address para AddressDTO
+    private Address convertToAddressModel(AddressDTO addressDTO) {
+        Address address = new Address();
+        address.setId(addressDTO.getId());
+        address.setStreet(addressDTO.getStreet());
+        address.setNumber(addressDTO.getNumber());
+        address.setDistrict(addressDTO.getDistrict());
+        address.setCity(addressDTO.getCity());
+        address.setState(addressDTO.getState());
+        address.setZipCode(addressDTO.getZipCode());
+        return address;
+    }
+
+    private AddressDTO convertToAddressDTO(Address address) {
+        return new AddressDTO(
+                address.getId(),
+                address.getStreet(),
+                address.getNumber(),
+                address.getDistrict(),
+                address.getCity(),
+                address.getState(),
+                address.getZipCode(),
+                null // User ID não é necessário no DTO de resposta aqui
+        );
+    }
+
     private User convertToModel(UserRequestDTO requestDTO) {
         return new User(
                 null,
                 requestDTO.getName(),
                 requestDTO.getEmail(),
                 requestDTO.getLogin(),
-                null,
                 new Date(),
-                requestDTO.getAdress(),
+                null, // Endereço removido do UserRequestDTO
                 requestDTO.getPassword(),
                 requestDTO.getType(),
-                null // O endereço agora será uma lista, então inicializamos como null aqui
+                null
         );
     }
 
@@ -47,8 +73,7 @@ public class UserService {
         entity.setEmail(user.getEmail());
         entity.setLogin(user.getLogin());
         entity.setDateGeneration(user.getDateGeneration());
-        entity.setDateChange(user.getDateChange()); // Mantendo para atualizações
-        entity.setAdress(user.getAdress()); // Manter este campo? Considere usar a lista de endereços.
+        entity.setDateChange(user.getDateChange());
         entity.setPassword(user.getPassword());
         entity.setType(user.getType());
         return entity;
@@ -63,10 +88,19 @@ public class UserService {
                 entity.getLogin(),
                 entity.getDateChange(),
                 entity.getDateGeneration(),
-                entity.getAdress(), // Manter este campo? Considere usar a lista de endereços.
                 entity.getPassword(), // Considerar não retornar a senha em cenários de leitura
                 entity.getType(),
-                null // A lista de endereços será carregada separadamente, se necessário
+                entity.getDeliveryAddresses() != null ? entity.getDeliveryAddresses().stream()
+                        .map(addressEntity -> convertToAddressModel(convertToAddressDTO(new Address(
+                                addressEntity.getId(),
+                                addressEntity.getStreet(),
+                                addressEntity.getNumber(),
+                                addressEntity.getDistrict(),
+                                addressEntity.getCity(),
+                                addressEntity.getState(),
+                                addressEntity.getZipCode()
+                        ))))
+                        .collect(Collectors.toList()) : null
         );
     }
 
@@ -79,8 +113,10 @@ public class UserService {
                 user.getLogin(),
                 user.getDateChange(),
                 user.getDateGeneration(),
-                user.getAdress(), // Manter este campo? Considere usar a lista de endereços.
-                user.getType()
+                user.getType(),
+                user.getDeliveryAddresses() != null ? user.getDeliveryAddresses().stream()
+                        .map(this::convertToAddressDTO)
+                        .collect(Collectors.toList()) : null
         );
     }
 
@@ -134,7 +170,6 @@ public class UserService {
         existingUserEntity.setName(userRequestDTO.getName());
         existingUserEntity.setEmail(userRequestDTO.getEmail());
         existingUserEntity.setLogin(userRequestDTO.getLogin());
-        existingUserEntity.setAdress(userRequestDTO.getAdress()); // Manter este campo? Considere a lista de endereços.
         existingUserEntity.setPassword(userRequestDTO.getPassword()); // Considere a segurança ao atualizar senhas
         existingUserEntity.setType(userRequestDTO.getType());
         existingUserEntity.setDateChange(new Date());

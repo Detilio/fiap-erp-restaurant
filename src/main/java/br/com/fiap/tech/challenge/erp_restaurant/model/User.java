@@ -10,7 +10,6 @@ public class User {
     private String login;
     private Date dateChange;
     private Date dateGeneration;
-    private String adress;
     private String password;
     private String token;
     private UserType type;
@@ -24,14 +23,13 @@ public class User {
         this.deliveryAddresses = deliveryAddresses;
     }
 
-    public User(Long id, String name, String email, String login, Date dateChange, Date dateGeneration, String adress, String password, UserType type, List<Address> deliveryAddresses) {
+    public User(Long id, String name, String email, String login, Date dateChange, Date dateGeneration, String password, UserType type, List<Address> deliveryAddresses) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.login = login;
         this.dateChange = dateChange;
         this.dateGeneration = dateGeneration;
-        this.adress = adress;
         this.password = password;
         this.type = type;
         this.deliveryAddresses = deliveryAddresses;
@@ -67,16 +65,8 @@ public class User {
         return dateGeneration;
     }
 
-    public String getAdress() {
-        return adress;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public String getToken() {
-        return token;
     }
 
     public UserType getType() {

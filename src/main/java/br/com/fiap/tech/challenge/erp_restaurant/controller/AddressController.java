@@ -46,8 +46,8 @@ public class AddressController {
     }
 
     @DeleteMapping("/{addressId}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long userId, @PathVariable Long addressId) {
+    public ResponseEntity<?> deleteAddress(@PathVariable Long userId, @PathVariable Long addressId) {
         addressService.deleteAddress(addressId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok().body("Endereço " + addressId + " do useário "+userId+" excluído com sucesso!");
     }
 }

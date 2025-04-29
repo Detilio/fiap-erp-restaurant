@@ -2,6 +2,7 @@ package br.com.fiap.tech.challenge.erp_restaurant.dto;
 
 import br.com.fiap.tech.challenge.erp_restaurant.model.User;
 import java.util.Date;
+import java.util.List;
 
 public class UserResponseDTO {
     private Long id;
@@ -10,21 +11,32 @@ public class UserResponseDTO {
     private String login;
     private Date dateChange;
     private Date dateGeneration;
-    private String adress;
     private User.UserType type;
+    private List<AddressDTO> addresses; // Adicione esta linha
 
     public UserResponseDTO() {
     }
 
-    public UserResponseDTO(Long id, String name, String email, String login, Date dateChange, Date dateGeneration, String adress, User.UserType type) {
+    public UserResponseDTO(Long id, String name, String email, String login, Date dateChange, Date dateGeneration, User.UserType type) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.login = login;
         this.dateChange = dateChange;
         this.dateGeneration = dateGeneration;
-        this.adress = adress;
         this.type = type;
+    }
+
+    // Novo construtor que inclui a lista de endereços
+    public UserResponseDTO(Long id, String name, String email, String login, Date dateChange, Date dateGeneration, User.UserType type, List<AddressDTO> addresses) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.login = login;
+        this.dateChange = dateChange;
+        this.dateGeneration = dateGeneration;
+        this.type = type;
+        this.addresses = addresses;
     }
 
     public Long getId() {
@@ -75,19 +87,20 @@ public class UserResponseDTO {
         this.dateGeneration = dateGeneration;
     }
 
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
     public User.UserType getType() {
         return type;
     }
 
     public void setType(User.UserType type) {
         this.type = type;
+    }
+
+    // Getter e Setter para a lista de endereços
+    public List<AddressDTO> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressDTO> addresses) {
+        this.addresses = addresses;
     }
 }
