@@ -1,12 +1,18 @@
 package br.com.fiap.tech.challenge.erp_restaurant.dto;
 
 import br.com.fiap.tech.challenge.erp_restaurant.model.User;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 public class UserRequestDTO {
+    @NotBlank(message = "O nome é obrigatório")
     private String name;
+    @NotBlank(message = "O e-mail é obrigatório")
     private String email;
+    @NotBlank(message = "O login é obrigatório")
     private String login;
+    @NotBlank(message = "A senha é obrigatória")
     private String password;
     private User.UserType type;
     private List<AddressDTO> addresses;

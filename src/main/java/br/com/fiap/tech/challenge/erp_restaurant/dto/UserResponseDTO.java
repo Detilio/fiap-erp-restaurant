@@ -12,7 +12,7 @@ public class UserResponseDTO {
     private Date dateChange;
     private Date dateGeneration;
     private User.UserType type;
-    private List<AddressDTO> addresses; // Adicione esta linha
+    private List<AddressDTO> addresses;
 
     public UserResponseDTO() {
     }
@@ -27,7 +27,6 @@ public class UserResponseDTO {
         this.type = type;
     }
 
-    // Novo construtor que inclui a lista de endereços
     public UserResponseDTO(Long id, String name, String email, String login, Date dateChange, Date dateGeneration, User.UserType type, List<AddressDTO> addresses) {
         this.id = id;
         this.name = name;
